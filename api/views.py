@@ -26,11 +26,9 @@ def register(request):
     data = request.data
     print(data)
     if not UserSerializer(data=data).is_valid():
-        print(1)
         return Response(status=400)
 
     if len(User.objects.filter(username=data.get('username'))) > 0:
-        print(2)
         return Response(status=400)
 
     user = User.objects.create_user(
@@ -61,12 +59,10 @@ def auth(request):
     data = request.data
     print(data)
     if not UserSerializer(data=data).is_valid():
-        print(1)
         return Response(status=400)
 
     user = authenticate(username=data.get('username'), password=data.get('password'))
     if user == None:
-        print(2)
         return Response(status=400)
 
     token_request = requests.post('http://127.0.0.1:8000/api/access/', json={
